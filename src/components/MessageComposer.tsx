@@ -203,7 +203,7 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
   const textSecondary = isDarkTheme ? "text-gray-400" : "text-gray-500";
 
   return (
-    <div className={`${bgSecondary} px-2 py-1 relative`}>
+    <div className="bg-white pt-2 pb-4 px-4 relative">
       {/* Emoji Picker */}
       {showEmojiPicker && (
         <div className="absolute bottom-full left-4 mb-2 z-50">
@@ -312,46 +312,60 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex items-end gap-1">
-        <button
-          type="button"
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          className={`p-1 rounded-full transition-colors ${
-            showEmojiPicker 
-              ? 'text-gray-600 bg-gray-200 dark:bg-gray-700' 
-              : `${textSecondary} hover:${textPrimary} hover:${bgQuaternary}`
-          }`}
-        >
-          <Smile className="h-5 w-5" />
-        </button>
-        
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className={`p-1 ${textSecondary} hover:${textPrimary} hover:${bgQuaternary} rounded-full transition-colors`}
-        >
-          <Paperclip className="h-5 w-5" />
-        </button>
-        
-        <div className="flex-1 relative">
-          <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type a message"
-          disabled={disabled}
-            className={`w-full ${bgTertiary} ${textPrimary} rounded-full px-3 py-0.5 focus:outline-none placeholder-${textSecondary} disabled:opacity-50 resize-none`}
-            style={{ minHeight: '28px' }}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          />
-          {isDragOver && (
-            <div className="absolute inset-0 bg-gray-600/20 border-2 border-dashed border-gray-600 rounded-full flex items-center justify-center">
-              <p className="text-gray-600 font-medium">Drop files here</p>
+      <div className="flex items-center gap-3 @container">
+        <label className="flex flex-col min-w-40 h-12 flex-1">
+          <div className="flex w-full flex-1 items-stretch rounded-full h-full bg-gray-100">
+            <input
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Message..."
+              disabled={disabled}
+              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-gray-900 focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-gray-500 px-4 text-base font-normal leading-normal"
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            />
+            <div className="flex border-none bg-transparent items-center justify-center pr-2">
+              <div className="flex items-center gap-0.5 justify-end">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex items-center justify-center p-2 rounded-full text-gray-500 hover:bg-gray-200"
+                >
+                  <Paperclip className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                      alert('Voice messages are not supported in this browser. Please type your message instead.');
+                      return;
+                    }
+                  }}
+                  onMouseDown={startRecording}
+                  onMouseUp={stopRecording}
+                  onMouseLeave={stopRecording}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    startRecording();
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    stopRecording();
+                  }}
+                  className={`flex items-center justify-center p-2 rounded-full transition-colors select-none ${
+                    isRecording ? 'bg-red-500 text-white' : 'text-gray-500 hover:bg-gray-200'
+                  }`}
+                  style={{ userSelect: 'none' }}
+                  title="Hold to record voice message"
+                >
+                  {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                </button>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        </label>
         
         <input
           ref={fileInputRef}
@@ -362,42 +376,15 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
           accept="image/*,.pdf,.doc,.docx,.txt"
         />
         
-        {message.trim() || attachments.length > 0 || audioBlob ? (
-          <button
+        <button
           type="submit"
-            disabled={disabled}
-            className="p-1 bg-green-500 hover:bg-green-600 text-white rounded-full transition-colors disabled:opacity-50"
+          onClick={handleSubmit}
+          disabled={disabled || (!message.trim() && attachments.length === 0 && !audioBlob)}
+          className="flex items-center justify-center size-12 shrink-0 rounded-full bg-blue-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Send className="h-5 w-5" />
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                alert('Voice messages are not supported in this browser. Please type your message instead.');
-                return;
-              }
-            }}
-            onMouseDown={startRecording}
-            onMouseUp={stopRecording}
-            onMouseLeave={stopRecording}
-            onTouchStart={(e) => {
-              e.preventDefault();
-              startRecording();
-            }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              stopRecording();
-            }}
-            className={`p-1 ${isRecording ? 'bg-red-500 text-white' : `${textSecondary} hover:${textPrimary} hover:${bgQuaternary}`} rounded-full transition-colors select-none`}
-            style={{ userSelect: 'none' }}
-            title="Hold to record voice message"
-          >
-            {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
-          </button>
-        )}
-      </form>
+        </button>
+      </div>
       </div>
   );
 };

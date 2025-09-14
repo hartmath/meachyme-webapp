@@ -37,13 +37,13 @@ const ChatHeader = ({
   };
 
   return (
-    <div className={`${bgSecondary}`}>
+    <div className="bg-white shadow-sm z-10">
       {showMessageSearch ? (
-        <div className="px-2 py-1">
+        <div className="px-4 py-3">
           <div className="flex items-center gap-3">
             <button 
               onClick={onBack}
-              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
+              className="text-gray-600 p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -51,56 +51,36 @@ const ChatHeader = ({
               placeholder="Search messages..."
               value={messageSearchTerm}
               onChange={(e) => handleSearch(e.target.value)}
-              className={`${bgTertiary} border-0 ${textPrimary} placeholder-${textSecondary} rounded-lg`}
+              className="bg-gray-100 border-0 text-gray-900 placeholder-gray-500 rounded-full"
               autoFocus
             />
             <button
               onClick={onToggleMessageSearch}
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors ${textSecondary}`}
+              className="text-gray-600 p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
         </div>
       ) : (
-        <div className="px-2 py-1 flex items-center justify-between">
+        <div className="flex items-center p-4 justify-between">
+          <button 
+            onClick={onBack} 
+            className="text-gray-600 p-2 -ml-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
           <div className="flex items-center gap-3">
-            <button 
-              onClick={onBack} 
-              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-            
-            <div className="relative">
-              <Avatar className="w-10 h-10">
-                <AvatarImage src={recipient.avatar_url} />
-                <AvatarFallback className="bg-gray-500 text-white font-semibold">
-                  {recipient.name?.charAt(0) || recipient.email?.charAt(0) || '?'}
-                </AvatarFallback>
-              </Avatar>
-              {recipient.is_online && (
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
-              )}
+            <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center shrink-0">
+              <span className="text-white text-sm font-medium">
+                {recipient.name?.charAt(0) || recipient.email?.charAt(0) || '?'}
+              </span>
             </div>
-            
-            <div className="flex-1">
-              <h2 className={`font-medium text-base ${textPrimary}`}>
-                {recipient.name || recipient.email}
-              </h2>
-              <p className={`${textSecondary} text-sm`}>
-                {recipient.is_online ? 'online' : 'last seen recently'}
-              </p>
-            </div>
+            <h2 className="text-gray-900 text-lg font-bold leading-tight tracking-[-0.015em]">
+              {recipient.name || recipient.email}
+            </h2>
           </div>
-          
-          <div className="flex items-center gap-1">
-            <button 
-              onClick={onToggleMessageSearch}
-              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
-            >
-              <Search className={`h-5 w-5 ${textSecondary}`} />
-            </button>
+          <div className="flex w-12 items-center justify-end">
             <button 
               onClick={() => {
                 toast.success(`Starting video call with ${recipient.name}...`);
@@ -108,28 +88,9 @@ const ChatHeader = ({
                   toast.info('Video call feature will be available soon!');
                 }, 2000);
               }}
-              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
+              className="text-gray-600 p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <Video className={`h-5 w-5 ${textSecondary}`} />
-            </button>
-            <button 
-              onClick={() => {
-                toast.success(`Starting voice call with ${recipient.name}...`);
-                setTimeout(() => {
-                  toast.info('Voice call feature will be available soon!');
-                }, 2000);
-              }}
-              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
-            >
-              <Phone className={`h-5 w-5 ${textSecondary}`} />
-            </button>
-            <button 
-              onClick={() => {
-                toast.info("Chat options coming soon!");
-              }}
-              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
-            >
-              <MoreVertical className={`h-5 w-5 ${textSecondary}`} />
+              <Video className="h-5 w-5" />
             </button>
           </div>
         </div>

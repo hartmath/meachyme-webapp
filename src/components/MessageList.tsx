@@ -146,133 +146,69 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
   const textSecondary = isDarkTheme ? "text-gray-400" : "text-gray-500";
 
   return (
-    <div className={`flex-1 overflow-y-auto ${bgPrimary}`}>
-      <div className="space-y-0">
-        {loading ? (
-          <div className="flex justify-center py-4">
-            <div className="animate-spin h-6 w-6 border-2 border-red-600 border-opacity-50 border-t-red-600 rounded-full"></div>
-          </div>
-        ) : (
-          <>
-            {sortedMessages.map((message) => {
+    <div className="flex-1 overflow-y-auto pb-4">
+      {loading ? (
+        <div className="flex justify-center py-4">
+          <div className="animate-spin h-6 w-6 border-2 border-blue-600 border-opacity-50 border-t-blue-600 rounded-full"></div>
+        </div>
+      ) : (
+        <>
+          {sortedMessages.map((message) => {
             const isCurrentUser = message.sender_id === currentUserId;
-              const messageStatus = getMessageStatus(message);
-              const isVoiceMessage = message.content.includes('🎤 Voice message');
-              const reactions = messageReactions[message.id] || [];
-              
+            const messageStatus = getMessageStatus(message);
+            const isVoiceMessage = message.content.includes('🎤 Voice message');
+            const reactions = messageReactions[message.id] || [];
+            
             return (
               <div
                 key={message.id}
                 className={cn(
-                    "flex px-3 py-0.5 group",
+                  "flex items-end gap-2.5 p-4",
                   isCurrentUser ? "justify-end" : "justify-start"
                 )}
               >
-                  <div className="relative">
-                <div
-                  className={cn(
-                        "max-w-[70%] rounded-2xl px-3 py-1.5 relative",
-                    isCurrentUser
-                          ? `${bgTertiary} text-white`
-                          : `${bgSecondary} text-gray-900 shadow-sm`
-                      )}
-                    >
-                      {isVoiceMessage ? (
-                        <VoiceMessage 
-                          audioUrl={message.attachment_url || ''} 
-                          isDarkTheme={isDarkTheme} 
-                        />
-                      ) : (
-                        <p className="text-sm leading-relaxed">{message.content}</p>
-                      )}
-                      
-                      <div className={cn(
-                        "flex items-center justify-end gap-1 mt-1",
-                        isCurrentUser ? "text-white/70" : textSecondary
-                      )}>
-                        <span className="text-xs">
-                    {format(new Date(message.created_at), "h:mm a")}
-                        </span>
-                        {isCurrentUser && (
-                          <div className="flex items-center ml-1">
-                            {messageStatus === 'read' ? (
-                              <CheckCheck className="h-3 w-3 text-blue-400" />
-                            ) : messageStatus === 'delivered' ? (
-                              <CheckCheck className="h-3 w-3 text-white/70" />
-                            ) : (
-                              <Check className="h-3 w-3" />
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Message Actions */}
-                    <div className={cn(
-                      "absolute top-0 flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity",
-                      isCurrentUser ? "-left-16" : "-right-16"
-                    )}>
-                      <button
-                        onClick={() => onReply?.(message)}
-                        className="p-1 bg-gray-600 hover:bg-gray-700 text-white rounded-full transition-colors"
-                        title="Reply"
-                      >
-                        <Reply className="h-3 w-3" />
-                      </button>
-                      <button
-                        onClick={() => onForward?.(message)}
-                        className="p-1 bg-gray-600 hover:bg-gray-700 text-white rounded-full transition-colors"
-                        title="Forward"
-                      >
-                        <Forward className="h-3 w-3" />
-                      </button>
-                      <button
-                        onClick={() => setShowReactions(showReactions === message.id ? null : message.id)}
-                        className="p-1 bg-gray-600 hover:bg-gray-700 text-white rounded-full transition-colors"
-                        title="React"
-                      >
-                        <Smile className="h-3 w-3" />
-                      </button>
-                    </div>
-
-                    {/* Reactions */}
-                    {reactions.length > 0 && (
-                      <div className={cn(
-                        "flex flex-wrap gap-1 mt-1",
-                        isCurrentUser ? "justify-end" : "justify-start"
-                      )}>
-                        {reactions.map((reaction, index) => (
-                          <span key={index} className="text-lg">{reaction}</span>
-                        ))}
-                      </div>
+                {!isCurrentUser && (
+                  <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center shrink-0">
+                    <span className="text-white text-xs font-medium">
+                      {message.sender_name?.charAt(0) || '?'}
+                    </span>
+                  </div>
+                )}
+                
+                <div className={cn("flex flex-1 flex-col gap-1", isCurrentUser ? "items-end" : "items-start")}>
+                  <div
+                    className={cn(
+                      "text-base font-normal leading-normal flex max-w-[360px] rounded-2xl px-4 py-3",
+                      isCurrentUser
+                        ? "bg-blue-600 text-white rounded-br-lg"
+                        : "bg-gray-100 text-gray-900 rounded-bl-lg"
                     )}
-
-                    {/* Reaction Picker */}
-                    {showReactions === message.id && (
-                      <div className={cn(
-                        "absolute z-10 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 flex space-x-1",
-                        isCurrentUser ? "bottom-full right-0 mb-2" : "bottom-full left-0 mb-2"
-                      )}>
-                        {['👍', '❤️', '😂', '😮', '😢', '😡'].map((emoji) => (
-                          <button
-                            key={emoji}
-                            onClick={() => addReaction(message.id, emoji)}
-                            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
-                          >
-                            {emoji}
-                          </button>
-                        ))}
-                      </div>
+                  >
+                    {isVoiceMessage ? (
+                      <VoiceMessage 
+                        audioUrl={message.attachment_url || ''} 
+                        isDarkTheme={isDarkTheme} 
+                      />
+                    ) : (
+                      <p className="break-words">{message.content}</p>
                     )}
                   </div>
+                </div>
+                
+                {isCurrentUser && (
+                  <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center shrink-0">
+                    <span className="text-white text-xs font-medium">
+                      {message.sender_name?.charAt(0) || '?'}
+                    </span>
+                  </div>
+                )}
               </div>
             );
-            })}
-            {isTyping && <TypingIndicator isDarkTheme={isDarkTheme} />}
-          </>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+          })}
+          {isTyping && <TypingIndicator isDarkTheme={isDarkTheme} />}
+        </>
+      )}
+      <div ref={messagesEndRef} />
     </div>
   );
 };

@@ -19,7 +19,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
   const [selectedContact, setSelectedContact] = useState<any>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [showMessageSearch, setShowMessageSearch] = useState(false);
   const [messageSearchTerm, setMessageSearchTerm] = useState("");
   const [replyToMessage, setReplyToMessage] = useState<any>(null);
@@ -168,7 +168,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
   }
 
   return (
-    <div className={`h-screen flex flex-col ${isDarkTheme ? 'bg-gray-900' : 'bg-white'} ${className}`}>
+    <div className={`h-screen flex flex-col bg-white ${className}`}>
       {/* Chat Header */}
       <ChatHeader 
         recipient={selectedContact} 
