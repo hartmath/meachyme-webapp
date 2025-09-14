@@ -155,24 +155,24 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
         ) : (
           <>
             {sortedMessages.map((message) => {
-              const isCurrentUser = message.sender_id === currentUserId;
+            const isCurrentUser = message.sender_id === currentUserId;
               const messageStatus = getMessageStatus(message);
               const isVoiceMessage = message.content.includes('🎤 Voice message');
               const reactions = messageReactions[message.id] || [];
               
-              return (
-                <div
-                  key={message.id}
-                  className={cn(
+            return (
+              <div
+                key={message.id}
+                className={cn(
                     "flex px-4 py-1 group",
-                    isCurrentUser ? "justify-end" : "justify-start"
-                  )}
-                >
+                  isCurrentUser ? "justify-end" : "justify-start"
+                )}
+              >
                   <div className="relative">
-                    <div
-                      className={cn(
+                <div
+                  className={cn(
                         "max-w-[70%] rounded-2xl px-4 py-2 relative",
-                        isCurrentUser
+                    isCurrentUser
                           ? `${bgTertiary} text-white`
                           : `${bgSecondary} text-gray-900 shadow-sm`
                       )}
@@ -191,7 +191,7 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
                         isCurrentUser ? "text-white/70" : textSecondary
                       )}>
                         <span className="text-xs">
-                          {format(new Date(message.created_at), "h:mm a")}
+                    {format(new Date(message.created_at), "h:mm a")}
                         </span>
                         {isCurrentUser && (
                           <div className="flex items-center ml-1">
@@ -265,8 +265,8 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
                       </div>
                     )}
                   </div>
-                </div>
-              );
+              </div>
+            );
             })}
             {isTyping && <TypingIndicator isDarkTheme={isDarkTheme} />}
           </>

@@ -59,12 +59,12 @@ const ChatHeader = ({
               className={`p-2 hover:${bgTertiary} rounded-full transition-colors ${textSecondary}`}
             >
               <X className="h-6 w-6" />
-            </button>
+      </button>
           </div>
         </div>
       ) : (
         <div className="px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3">
             <button 
               onClick={onBack} 
               className={`p-2 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
@@ -74,11 +74,11 @@ const ChatHeader = ({
             
             <div className="relative">
               <Avatar className="w-10 h-10">
-                <AvatarImage src={recipient.avatar_url} />
+          <AvatarImage src={recipient.avatar_url} />
                 <AvatarFallback className="bg-red-600 text-white font-semibold">
                   {recipient.name?.charAt(0) || recipient.email?.charAt(0) || '?'}
-                </AvatarFallback>
-              </Avatar>
+          </AvatarFallback>
+        </Avatar>
               {recipient.is_online && (
                 <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-black rounded-full"></div>
               )}

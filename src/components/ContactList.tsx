@@ -49,11 +49,11 @@ const ContactList = ({ onSelectContact, selectedContactId, unreadCounts, contact
           >
             <div className="relative flex-shrink-0">
               <Avatar className="w-12 h-12">
-                <AvatarImage src={contact.avatar_url} />
+              <AvatarImage src={contact.avatar_url} />
                 <AvatarFallback className="bg-red-600 text-white text-lg font-semibold">
                   {contact.name?.charAt(0) || contact.email?.charAt(0) || '?'}
-                </AvatarFallback>
-              </Avatar>
+              </AvatarFallback>
+            </Avatar>
               {contact.is_online && (
                 <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-black rounded-full"></div>
               )}

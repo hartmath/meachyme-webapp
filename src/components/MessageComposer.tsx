@@ -43,7 +43,7 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         const attachmentInfo = attachments.map(att => att.file.name).join(', ');
         const fullMessage = message.trim() + (attachmentInfo ? `\n[Attachments: ${attachmentInfo}]` : '');
         onSendMessage(fullMessage, undefined, 'text');
-        setMessage("");
+      setMessage("");
         setAttachments([]);
       }
     }
@@ -335,11 +335,11 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         
         <div className="flex-1 relative">
           <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type a message"
-            disabled={disabled}
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type a message"
+          disabled={disabled}
             className={`w-full ${bgTertiary} ${textPrimary} rounded-full px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-600 placeholder-${textSecondary} disabled:opacity-50 resize-none`}
             style={{ minHeight: '44px' }}
             onDragOver={handleDragOver}
@@ -364,11 +364,11 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         
         {message.trim() || attachments.length > 0 || audioBlob ? (
           <button
-            type="submit"
+          type="submit"
             disabled={disabled}
             className="p-3 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors disabled:opacity-50"
-          >
-            <Send className="h-5 w-5" />
+        >
+          <Send className="h-5 w-5" />
           </button>
         ) : (
           <button
@@ -399,7 +399,7 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
           </button>
         )}
       </form>
-    </div>
+      </div>
   );
 };
 
