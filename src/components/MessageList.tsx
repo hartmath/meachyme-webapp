@@ -170,7 +170,7 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
                 {!isCurrentUser && (
                   <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center shrink-0">
                     <span className="text-white text-xs font-medium">
-                      {message.sender_name?.charAt(0) || '?'}
+                      {message.sender?.full_name?.charAt(0) || message.sender?.email?.charAt(0) || '?'}
                     </span>
                   </div>
                 )}
@@ -198,7 +198,7 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
                 {isCurrentUser && (
                   <div className="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center shrink-0">
                     <span className="text-white text-xs font-medium">
-                      {message.sender_name?.charAt(0) || '?'}
+                      {message.sender?.full_name?.charAt(0) || message.sender?.email?.charAt(0) || '?'}
                     </span>
                   </div>
                 )}

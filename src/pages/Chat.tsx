@@ -66,8 +66,12 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
       try {
         const { data, error } = await supabase
           .from('direct_messages')
-          .select('*')
-          .or(`and(sender_id.eq.${authUser.id},receiver_id.eq.${selectedContact.id}),and(sender_id.eq.${selectedContact.id},receiver_id.eq.${authUser.id})`)
+          .select(`
+            *,
+            sender:sender_id(full_name, email),
+            recipient:recipient_id(full_name, email)
+          `)
+          .or(`and(sender_id.eq.${authUser.id},recipient_id.eq.${selectedContact.id}),and(sender_id.eq.${selectedContact.id},recipient_id.eq.${authUser.id})`)
           .order('created_at', { ascending: true });
 
         if (error) {
@@ -94,7 +98,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
     try {
       const newMessage = {
         sender_id: authUser.id,
-        receiver_id: selectedContact.id,
+        recipient_id: selectedContact.id,
         content,
         attachment_url: attachmentUrl,
         message_type: type,
