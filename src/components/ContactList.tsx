@@ -41,7 +41,7 @@ const ContactList = ({ onSelectContact, selectedContactId, unreadCounts, contact
           <div
             key={contact.id}
             onClick={() => onSelectContact(contact)}
-            className={`flex items-center space-x-3 px-4 py-3 cursor-pointer transition-colors ${
+            className={`flex items-center space-x-3 px-3 py-2 cursor-pointer transition-colors ${
               selectedContactId === contact.id
                 ? bgQuaternary
                 : `hover:${bgTertiary}`

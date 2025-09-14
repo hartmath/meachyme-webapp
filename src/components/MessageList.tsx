@@ -146,8 +146,8 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
   const textSecondary = isDarkTheme ? "text-gray-400" : "text-gray-500";
 
   return (
-    <div className={`flex-1 overflow-y-auto ${bgPrimary} min-h-0`}>
-      <div className="space-y-1">
+    <div className={`flex-1 overflow-y-auto ${bgPrimary}`}>
+      <div className="space-y-0.5">
         {loading ? (
           <div className="flex justify-center py-4">
             <div className="animate-spin h-6 w-6 border-2 border-red-600 border-opacity-50 border-t-red-600 rounded-full"></div>

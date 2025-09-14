@@ -329,7 +329,7 @@ const MessagingSystem = ({
             // WhatsApp Mobile Chat List View
             <div className={`h-full ${isDarkTheme ? 'bg-gray-900' : 'bg-white'} flex flex-col`}>
               {/* Header - WhatsApp Style */}
-              <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'} px-4 py-3 flex items-center justify-between`}>
+              <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'} px-3 py-2 flex items-center justify-between`}>
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
                     <img 
@@ -379,7 +379,7 @@ const MessagingSystem = ({
 
               {/* Search Bar */}
               {showSearch && (
-                <div className={`px-4 py-2 ${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'}`}>
+                <div className={`px-3 py-1 ${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'}`}>
                   <Input
                     placeholder="Search or start new chat"
                     value={searchTerm}
