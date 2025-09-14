@@ -8,6 +8,7 @@ import FeedsPage from "./FeedsPage";
 import EventsPage from "./EventsPage";
 import CallsPage from "./CallsPage";
 import ProfilesPage from "./ProfilesPage";
+import ContactSelectionPage from "./ContactSelectionPage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
@@ -40,6 +41,7 @@ const MessagingSystem = ({
   const [activeTab, setActiveTab] = useState("chat");
   const [messageSearchTerm, setMessageSearchTerm] = useState("");
   const [showMessageSearch, setShowMessageSearch] = useState(false);
+  const [showContactSelection, setShowContactSelection] = useState(false);
   const { authUser } = useAuth();
 
   useEffect(() => {
@@ -276,6 +278,44 @@ const MessagingSystem = ({
     setShowChat(false);
   };
 
+  const handleContactSelection = (contact: any) => {
+    // Convert the contact from ContactSelectionPage format to User format
+    const userContact: User = {
+      id: contact.id,
+      name: contact.full_name || contact.username || 'Unknown User',
+      avatar_url: contact.avatar_url,
+      email: contact.email,
+      phone: contact.phone,
+      location: contact.location,
+      bio: contact.bio,
+      business_name: contact.business_name,
+      category: contact.category,
+      user_type: contact.user_type,
+      username: contact.username,
+      is_online: contact.is_online,
+      last_seen: contact.last_seen,
+      member_since: contact.member_since,
+      profile_views: contact.profile_views,
+      average_rating: contact.average_rating,
+      reviews_count: contact.reviews_count
+    };
+    
+    setSelectedContact(userContact);
+    setShowChat(true);
+    setShowContactSelection(false);
+    
+    // Add to contacts if not already present
+    if (!contacts.find(c => c.id === contact.id)) {
+      setContacts(prev => [...prev, userContact]);
+    }
+    
+    toast.success(`Started chat with ${userContact.name}`);
+  };
+
+  const handleBackFromContactSelection = () => {
+    setShowContactSelection(false);
+  };
+
   const filteredContacts = contacts.filter(contact =>
     contact.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     contact.email?.toLowerCase().includes(searchTerm.toLowerCase())
@@ -404,6 +444,18 @@ const MessagingSystem = ({
   // Theme classes - Red and White for light mode, Black and Red for dark mode
   const bgPrimary = isDarkTheme ? "bg-gray-900" : "bg-gray-50";
 
+  // Show contact selection page if needed
+  if (showContactSelection) {
+    return (
+      <div className={`h-full ${bgPrimary} ${className} relative`}>
+        <ContactSelectionPage
+          onContactSelect={handleContactSelection}
+          onBack={handleBackFromContactSelection}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`h-full ${bgPrimary} ${className} relative`}>
       {renderActiveTab()}
@@ -414,7 +466,11 @@ const MessagingSystem = ({
       />
       {/* Floating Action Button for New Chat - only show on chat tab when not in chat view */}
       {activeTab === "chat" && !showChat && (
-        <ConversationButton currentUser={currentUser} onSelectContact={handleSelectContact} />
+        <ConversationButton 
+          currentUser={currentUser} 
+          onSelectContact={handleSelectContact} 
+          onShowContactSelection={() => setShowContactSelection(true)}
+        />
       )}
     </div>
   );
