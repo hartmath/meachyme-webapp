@@ -86,10 +86,12 @@ const MessagingSystem = ({
   const fetchMessages = async (contactId) => {
     setMessagesLoading(true);
     try {
-      const { data, error } = await supabase.rpc('get_conversation_messages', {
-        user1_id: authUser.id,
-        user2_id: contactId
-      });
+      const { data, error } = await supabase
+        .from('direct_messages')
+        .select('*')
+        .or(`and(sender_id.eq.${authUser.id},recipient_id.eq.${contactId}),and(sender_id.eq.${contactId},recipient_id.eq.${authUser.id})`)
+        .order('created_at', { ascending: true });
+      
       if (error) throw error;
       setMessages(data || []);
     } catch (error) {
@@ -139,7 +141,12 @@ const MessagingSystem = ({
   const fetchConversationContacts = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.rpc('get_user_conversations');
+      // Get all profiles except current user instead of using RPC function
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .neq('user_id', authUser.id)
+        .order('full_name', { ascending: true });
 
       if (error) {
         console.error("Error in get_user_conversations:", error);
@@ -147,14 +154,12 @@ const MessagingSystem = ({
       }
 
       if (!data) {
-        console.log("No conversations found");
+        console.log("No profiles found");
         setContacts([]);
         setLoading(false);
         return;
       }
 
-      const conversationUserIds = data.map(conversation => conversation.conversation_with);
-      
       // Get unread message counts for each conversation
       const { data: unreadData, error: unreadError } = await supabase
         .from('direct_messages')
@@ -164,7 +169,7 @@ const MessagingSystem = ({
 
       if (unreadError) {
         console.error("Error fetching unread counts:", unreadError);
-        throw new Error(`Failed to fetch unread counts: ${unreadError.message}`);
+        // Don't throw error for unread counts, just continue
       }
 
       // Create a map of unread counts
@@ -174,33 +179,8 @@ const MessagingSystem = ({
       }), {});
       setUnreadCounts(unreadCountMap);
       
-      const { data: profilesData, error: profilesError } = await supabase
-        .from("profiles")
-        .select(`
-          id,
-          full_name,
-          avatar_url,
-          email,
-          phone,
-          location,
-          bio,
-          business_name,
-          category,
-          user_type,
-          username,
-          is_online,
-          last_seen,
-          member_since,
-          profile_views,
-          average_rating,
-          reviews_count
-        `)
-        .in("id", conversationUserIds);
-
-      if (profilesError) {
-        console.error("Error fetching profiles:", profilesError);
-        throw new Error(`Failed to fetch profiles: ${profilesError.message}`);
-      }
+      // Use the profiles data directly
+      const profilesData = data;
 
       if (profilesData && profilesData.length > 0) {
         const mappedProfiles = profilesData.map(profile => ({
