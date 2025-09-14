@@ -34,8 +34,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
 }) => {
   if (!selectedContact) {
     return (
-      <div className={`flex-1 flex items-center justify-center ${isDarkTheme ? 'bg-black' : 'bg-white'}`}>
-        <div className={`text-center ${isDarkTheme ? 'text-red-400' : 'text-red-600'}`}>
+      <div className={`flex-1 flex items-center justify-center ${isDarkTheme ? 'bg-gray-900' : 'bg-white'}`}>
+        <div className={`text-center ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'}`}>
           <div className="text-6xl mb-4">💬</div>
           <h3 className="text-xl font-semibold mb-2">Select a contact to start chatting</h3>
           <p className="text-sm">Choose from your contacts list to begin a conversation</p>
@@ -45,7 +45,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   }
 
   return (
-    <div className={`flex flex-col h-full ${isDarkTheme ? 'bg-black' : 'bg-white'}`}>
+    <div className={`flex flex-col h-full ${isDarkTheme ? 'bg-gray-900' : 'bg-white'}`}>
       <ChatHeader 
         recipient={selectedContact} 
         onBack={onBack} 

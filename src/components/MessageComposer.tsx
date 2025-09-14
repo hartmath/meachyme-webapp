@@ -312,43 +312,43 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex items-end gap-2">
+      <form onSubmit={handleSubmit} className="flex items-end gap-2 px-4 py-3">
         <button
           type="button"
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          className={`p-3 rounded-full transition-colors ${
+          className={`p-2 rounded-full transition-colors ${
             showEmojiPicker 
-              ? 'text-red-600 bg-red-100 dark:bg-red-900' 
+              ? 'text-gray-600 bg-gray-200 dark:bg-gray-700' 
               : `${textSecondary} hover:${textPrimary} hover:${bgQuaternary}`
           }`}
         >
-          <Smile className="h-6 w-6" />
+          <Smile className="h-5 w-5" />
         </button>
         
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className={`p-3 ${textSecondary} hover:${textPrimary} hover:${bgQuaternary} rounded-full transition-colors`}
+          className={`p-2 ${textSecondary} hover:${textPrimary} hover:${bgQuaternary} rounded-full transition-colors`}
         >
-          <Paperclip className="h-6 w-6" />
+          <Paperclip className="h-5 w-5" />
         </button>
         
         <div className="flex-1 relative">
           <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type a message"
-          disabled={disabled}
-            className={`w-full ${bgTertiary} ${textPrimary} rounded-full px-4 py-3 focus:outline-none focus:ring-1 focus:ring-red-600 placeholder-${textSecondary} disabled:opacity-50 resize-none`}
-            style={{ minHeight: '44px' }}
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type a message"
+            disabled={disabled}
+            className={`w-full ${bgTertiary} ${textPrimary} rounded-full px-4 py-2 focus:outline-none placeholder-${textSecondary} disabled:opacity-50 resize-none`}
+            style={{ minHeight: '40px' }}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
           />
           {isDragOver && (
-            <div className="absolute inset-0 bg-red-600/20 border-2 border-dashed border-red-600 rounded-full flex items-center justify-center">
-              <p className="text-red-600 font-medium">Drop files here</p>
+            <div className="absolute inset-0 bg-gray-600/20 border-2 border-dashed border-gray-600 rounded-full flex items-center justify-center">
+              <p className="text-gray-600 font-medium">Drop files here</p>
             </div>
           )}
         </div>
@@ -364,17 +364,16 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         
         {message.trim() || attachments.length > 0 || audioBlob ? (
           <button
-          type="submit"
+            type="submit"
             disabled={disabled}
-            className="p-3 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors disabled:opacity-50"
-        >
-          <Send className="h-5 w-5" />
+            className="p-2 bg-green-500 hover:bg-green-600 text-white rounded-full transition-colors disabled:opacity-50"
+          >
+            <Send className="h-5 w-5" />
           </button>
         ) : (
           <button
             type="button"
             onClick={() => {
-              // Fallback: if voice recording fails, just show a message
               if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 alert('Voice messages are not supported in this browser. Please type your message instead.');
                 return;
@@ -391,7 +390,7 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
               e.preventDefault();
               stopRecording();
             }}
-            className={`p-3 ${isRecording ? 'bg-red-600 text-white' : `${textSecondary} hover:${textPrimary} hover:${bgQuaternary}`} rounded-full transition-colors select-none`}
+            className={`p-2 ${isRecording ? 'bg-red-500 text-white' : `${textSecondary} hover:${textPrimary} hover:${bgQuaternary}`} rounded-full transition-colors select-none`}
             style={{ userSelect: 'none' }}
             title="Hold to record voice message"
           >

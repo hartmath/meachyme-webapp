@@ -146,7 +146,7 @@ const MessagingSystem = ({
         .from('profiles')
         .select('*')
         .neq('user_id', authUser.id)
-        .order('full_name', { ascending: true });
+        .order('full_name');
 
       if (error) {
         console.error("Error in get_user_conversations:", error);
@@ -325,19 +325,18 @@ const MessagingSystem = ({
       case "chat":
       default:
         if (!showChat) {
-  return (
+          return (
             // WhatsApp Mobile Chat List View
             <div className={`h-full ${isDarkTheme ? 'bg-gray-900' : 'bg-white'} flex flex-col`}>
-              {/* Header */}
-              <div className={`${isDarkTheme ? 'bg-gray-900' : 'bg-white'} px-4 py-4 border-b ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'} flex items-center justify-between`}>
+              {/* Header - WhatsApp Style */}
+              <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'} px-4 py-3 flex items-center justify-between`}>
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
                     <img 
                       src="/mealogo.png.jpg" 
                       alt="Chyme Logo" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        // Fallback to the original M if image fails to load
                         const target = e.currentTarget as HTMLImageElement;
                         target.style.display = 'none';
                         const nextElement = target.nextElementSibling as HTMLElement;
@@ -347,32 +346,31 @@ const MessagingSystem = ({
                       }}
                     />
                     <div className="w-full h-full bg-red-600 rounded-full flex items-center justify-center" style={{display: 'none'}}>
-                      <span className="text-xl font-bold text-white">M</span>
+                      <span className="text-sm font-bold text-white">M</span>
                     </div>
                   </div>
-                  <h1 className={`${isDarkTheme ? 'text-white' : 'text-gray-900'} text-xl font-semibold`}>Chyme</h1>
+                  <h1 className={`${isDarkTheme ? 'text-white' : 'text-gray-900'} text-lg font-medium`}>Chats</h1>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
                   <button 
                     onClick={() => setShowSearch(!showSearch)}
-                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} hover:${isDarkTheme ? 'bg-gray-800' : 'bg-gray-100'} rounded-full transition-colors`}
+                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
                   >
-                    {showSearch ? <X className="h-6 w-6" /> : <Search className="h-6 w-6" />}
+                    {showSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                   </button>
                   <button 
                     onClick={toggleTheme}
-                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} hover:${isDarkTheme ? 'bg-gray-800' : 'bg-gray-100'} rounded-full transition-colors`}
+                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
                   >
-                    {isDarkTheme ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
+                    {isDarkTheme ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                   </button>
                   <button 
                     onClick={() => {
-                      // Show a dropdown menu with options
-                      toast.info("More options coming soon! This will include settings, archived chats, and more.");
+                      toast.info("More options coming soon!");
                     }}
-                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} hover:${isDarkTheme ? 'bg-gray-800' : 'bg-gray-100'} rounded-full transition-colors`}
+                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                     </svg>
                   </button>
@@ -381,26 +379,26 @@ const MessagingSystem = ({
 
               {/* Search Bar */}
               {showSearch && (
-                <div className={`px-4 py-3 border-b ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'}`}>
+                <div className={`px-4 py-2 ${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'}`}>
                   <Input
                     placeholder="Search or start new chat"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-100'} border-${isDarkTheme ? 'border-gray-700' : 'border-gray-200'} ${isDarkTheme ? 'text-white' : 'text-gray-900'} placeholder-${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} focus:border-red-600`}
+                    className={`${isDarkTheme ? 'bg-gray-700' : 'bg-white'} border-0 ${isDarkTheme ? 'text-white' : 'text-gray-900'} placeholder-${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} rounded-lg`}
                   />
                 </div>
               )}
 
               {/* Contact List */}
               <div className="flex-1 overflow-hidden">
-        <ContactList
-          onSelectContact={handleSelectContact}
-          selectedContactId={selectedContact?.id}
-          unreadCounts={unreadCounts}
+                <ContactList
+                  onSelectContact={handleSelectContact}
+                  selectedContactId={selectedContact?.id}
+                  unreadCounts={unreadCounts}
                   contacts={filteredContacts}
                   isDarkTheme={isDarkTheme}
-        />
-      </div>
+                />
+              </div>
             </div>
           );
         } else {

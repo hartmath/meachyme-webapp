@@ -11,12 +11,12 @@ interface ContactListProps {
 }
 
 const ContactList = ({ onSelectContact, selectedContactId, unreadCounts, contacts = [], isDarkTheme = true }: ContactListProps) => {
-  // Theme classes - Red and White for light mode, Black and Red for dark mode
-  const bgSecondary = isDarkTheme ? "bg-black" : "bg-white";
-  const bgTertiary = isDarkTheme ? "bg-red-900" : "bg-red-100";
-  const bgQuaternary = isDarkTheme ? "bg-red-800" : "bg-red-200";
+  // WhatsApp-like theme classes
+  const bgSecondary = isDarkTheme ? "bg-gray-900" : "bg-white";
+  const bgTertiary = isDarkTheme ? "bg-gray-800" : "bg-gray-50";
+  const bgQuaternary = isDarkTheme ? "bg-gray-700" : "bg-gray-100";
   const textPrimary = isDarkTheme ? "text-white" : "text-gray-900";
-  const textSecondary = isDarkTheme ? "text-red-300" : "text-red-600";
+  const textSecondary = isDarkTheme ? "text-gray-400" : "text-gray-500";
 
   if (contacts.length === 0) {
     return (
@@ -41,7 +41,7 @@ const ContactList = ({ onSelectContact, selectedContactId, unreadCounts, contact
           <div
             key={contact.id}
             onClick={() => onSelectContact(contact)}
-            className={`flex items-center space-x-4 px-4 py-3 cursor-pointer transition-colors ${
+            className={`flex items-center space-x-3 px-4 py-3 cursor-pointer transition-colors ${
               selectedContactId === contact.id
                 ? bgQuaternary
                 : `hover:${bgTertiary}`
@@ -49,13 +49,13 @@ const ContactList = ({ onSelectContact, selectedContactId, unreadCounts, contact
           >
             <div className="relative flex-shrink-0">
               <Avatar className="w-12 h-12">
-              <AvatarImage src={contact.avatar_url} />
-                <AvatarFallback className="bg-red-600 text-white text-lg font-semibold">
+                <AvatarImage src={contact.avatar_url} />
+                <AvatarFallback className="bg-gray-500 text-white text-lg font-semibold">
                   {contact.name?.charAt(0) || contact.email?.charAt(0) || '?'}
-              </AvatarFallback>
-            </Avatar>
+                </AvatarFallback>
+              </Avatar>
               {contact.is_online && (
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-black rounded-full"></div>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-900 rounded-full"></div>
               )}
             </div>
             
@@ -69,7 +69,7 @@ const ContactList = ({ onSelectContact, selectedContactId, unreadCounts, contact
                     {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                   {unreadCounts[contact.id] > 0 && (
-                    <div className="bg-red-600 text-white text-xs font-semibold rounded-full px-2 py-1 min-w-[20px] text-center">
+                    <div className="bg-green-500 text-white text-xs font-semibold rounded-full px-2 py-1 min-w-[20px] text-center">
                       {unreadCounts[contact.id]}
                     </div>
                   )}
