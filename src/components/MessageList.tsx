@@ -20,8 +20,8 @@ const TypingIndicator = ({ isDarkTheme = true }: { isDarkTheme?: boolean }) => {
   const textSecondary = isDarkTheme ? "text-gray-300" : "text-gray-600";
   
   return (
-    <div className="flex justify-start px-4 py-2">
-      <div className={`${bgSecondary} rounded-2xl px-4 py-3 max-w-[65%]`}>
+    <div className="flex justify-start px-3 py-1">
+      <div className={`${bgSecondary} rounded-2xl px-3 py-2 max-w-[65%]`}>
         <div className="flex items-center space-x-1">
           <div className="flex space-x-1">
             <div className={`w-2 h-2 ${textSecondary} rounded-full animate-bounce`} style={{ animationDelay: '0ms' }}></div>
@@ -147,7 +147,7 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
 
   return (
     <div className={`flex-1 overflow-y-auto ${bgPrimary}`}>
-      <div className="space-y-0.5">
+      <div className="space-y-0">
         {loading ? (
           <div className="flex justify-center py-4">
             <div className="animate-spin h-6 w-6 border-2 border-red-600 border-opacity-50 border-t-red-600 rounded-full"></div>
@@ -164,14 +164,14 @@ const MessageList = ({ messages, currentUserId, loading = false, isTyping = fals
               <div
                 key={message.id}
                 className={cn(
-                    "flex px-4 py-1 group",
+                    "flex px-3 py-0.5 group",
                   isCurrentUser ? "justify-end" : "justify-start"
                 )}
               >
                   <div className="relative">
                 <div
                   className={cn(
-                        "max-w-[70%] rounded-2xl px-4 py-2 relative",
+                        "max-w-[70%] rounded-2xl px-3 py-1.5 relative",
                     isCurrentUser
                           ? `${bgTertiary} text-white`
                           : `${bgSecondary} text-gray-900 shadow-sm`

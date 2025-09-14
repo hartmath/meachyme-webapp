@@ -203,7 +203,7 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
   const textSecondary = isDarkTheme ? "text-gray-400" : "text-gray-500";
 
   return (
-    <div className={`${bgSecondary} px-3 py-2 border-t ${borderColor} relative`}>
+    <div className={`${bgSecondary} px-2 py-1.5 border-t ${borderColor} relative`}>
       {/* Emoji Picker */}
       {showEmojiPicker && (
         <div className="absolute bottom-full left-4 mb-2 z-50">
@@ -312,7 +312,7 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex items-end gap-2">
+      <form onSubmit={handleSubmit} className="flex items-end gap-1.5">
         <button
           type="button"
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -340,8 +340,8 @@ const MessageComposer = ({ onSendMessage, disabled = false, isDarkTheme = true }
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type a message"
             disabled={disabled}
-            className={`w-full ${bgTertiary} ${textPrimary} rounded-full px-3 py-1.5 focus:outline-none placeholder-${textSecondary} disabled:opacity-50 resize-none`}
-            style={{ minHeight: '36px' }}
+            className={`w-full ${bgTertiary} ${textPrimary} rounded-full px-3 py-1 focus:outline-none placeholder-${textSecondary} disabled:opacity-50 resize-none`}
+            style={{ minHeight: '32px' }}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}

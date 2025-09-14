@@ -39,11 +39,11 @@ const ChatHeader = ({
   return (
     <div className={`${bgSecondary} border-b ${borderColor}`}>
       {showMessageSearch ? (
-        <div className="px-3 py-2">
+        <div className="px-2 py-1.5">
           <div className="flex items-center gap-3">
             <button 
               onClick={onBack}
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
+              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -63,11 +63,11 @@ const ChatHeader = ({
           </div>
         </div>
       ) : (
-        <div className="px-3 py-2 flex items-center justify-between">
+        <div className="px-2 py-1.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button 
               onClick={onBack} 
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
+              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors ${textPrimary}`}
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -97,7 +97,7 @@ const ChatHeader = ({
           <div className="flex items-center gap-1">
             <button 
               onClick={onToggleMessageSearch}
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors`}
+              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
             >
               <Search className={`h-5 w-5 ${textSecondary}`} />
             </button>
@@ -108,7 +108,7 @@ const ChatHeader = ({
                   toast.info('Video call feature will be available soon!');
                 }, 2000);
               }}
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors`}
+              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
             >
               <Video className={`h-5 w-5 ${textSecondary}`} />
             </button>
@@ -119,7 +119,7 @@ const ChatHeader = ({
                   toast.info('Voice call feature will be available soon!');
                 }, 2000);
               }}
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors`}
+              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
             >
               <Phone className={`h-5 w-5 ${textSecondary}`} />
             </button>
@@ -127,7 +127,7 @@ const ChatHeader = ({
               onClick={() => {
                 toast.info("Chat options coming soon!");
               }}
-              className={`p-2 hover:${bgTertiary} rounded-full transition-colors`}
+              className={`p-1.5 hover:${bgTertiary} rounded-full transition-colors`}
             >
               <MoreVertical className={`h-5 w-5 ${textSecondary}`} />
             </button>
