@@ -37,9 +37,9 @@ const ChatHeader = ({
   };
 
   return (
-    <div className={`${bgSecondary} border-b ${borderColor}`}>
+    <div className={`${bgSecondary}`}>
       {showMessageSearch ? (
-        <div className="px-2 py-1.5">
+        <div className="px-2 py-1">
           <div className="flex items-center gap-3">
             <button 
               onClick={onBack}
@@ -63,7 +63,7 @@ const ChatHeader = ({
           </div>
         </div>
       ) : (
-        <div className="px-2 py-1.5 flex items-center justify-between">
+        <div className="px-2 py-1 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button 
               onClick={onBack} 
