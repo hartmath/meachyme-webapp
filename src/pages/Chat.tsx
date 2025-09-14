@@ -28,7 +28,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
   // Load contact details
   useEffect(() => {
     const loadContact = async () => {
-      if (!contactId || !authUser) return;
+      if (!contactId || !authUser?.id) return;
       
       try {
         const { data, error } = await supabase
@@ -40,31 +40,34 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
         if (error) {
           console.error('Error loading contact:', error);
           toast.error('Failed to load contact');
+          navigate('/messages');
           return;
         }
 
-        setSelectedContact(data);
+        if (data) {
+          setSelectedContact(data);
+        }
       } catch (error) {
         console.error('Error loading contact:', error);
         toast.error('Failed to load contact');
+        navigate('/messages');
       }
     };
 
     loadContact();
-  }, [contactId, authUser]);
+  }, [contactId, authUser, navigate]);
 
   // Load messages
   useEffect(() => {
     const loadMessages = async () => {
-      if (!selectedContact || !authUser) return;
+      if (!selectedContact?.id || !authUser?.id) return;
       
       setLoading(true);
       try {
         const { data, error } = await supabase
           .from('direct_messages')
           .select('*')
-          .or(`sender_id.eq.${authUser.id},receiver_id.eq.${authUser.id}`)
-          .or(`sender_id.eq.${selectedContact.id},receiver_id.eq.${selectedContact.id}`)
+          .or(`and(sender_id.eq.${authUser.id},receiver_id.eq.${selectedContact.id}),and(sender_id.eq.${selectedContact.id},receiver_id.eq.${authUser.id})`)
           .order('created_at', { ascending: true });
 
         if (error) {
@@ -86,7 +89,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
   }, [selectedContact, authUser]);
 
   const handleSendMessage = async (content: string, attachmentUrl?: string, type: 'text' | 'voice' = 'text') => {
-    if (!selectedContact || !authUser) return;
+    if (!selectedContact?.id || !authUser?.id) return;
 
     try {
       const newMessage = {
@@ -142,7 +145,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
   // Filter messages based on search term
   const filteredMessages = messageSearchTerm
     ? messages.filter(message =>
-        message.content.toLowerCase().includes(messageSearchTerm.toLowerCase())
+        message?.content?.toLowerCase().includes(messageSearchTerm.toLowerCase())
       )
     : messages;
 
