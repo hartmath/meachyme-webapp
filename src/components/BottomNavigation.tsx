@@ -25,7 +25,7 @@ const BottomNavigation = ({ activeTab, onTabChange, isDarkTheme = true }: Bottom
 
   return (
     <div className={`fixed bottom-0 left-0 right-0 ${bgSecondary} border-t ${borderColor} z-50`}>
-      <div className="flex items-center justify-around py-2 h-16">
+      <div className="flex items-center justify-around py-1 h-14">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -34,11 +34,11 @@ const BottomNavigation = ({ activeTab, onTabChange, isDarkTheme = true }: Bottom
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center justify-center py-2 px-3 min-w-0 flex-1 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg mx-1 ${
+              className={`flex flex-col items-center justify-center py-1 px-2 min-w-0 flex-1 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg mx-1 ${
                 isActive ? activeColor : textSecondary
               }`}
             >
-              <Icon className={`h-6 w-6 mb-1 ${isActive ? 'text-red-600' : textSecondary}`} />
+              <Icon className={`h-5 w-5 mb-0.5 ${isActive ? 'text-red-600' : textSecondary}`} />
               <span className={`text-xs font-medium truncate ${isActive ? 'text-red-600' : textSecondary}`}>
                 {tab.label}
               </span>

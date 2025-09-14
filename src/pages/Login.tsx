@@ -50,7 +50,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
-      <div className="bg-red-600 px-6 py-8 text-center">
+      <div className="bg-red-600 px-6 py-6 text-center">
         <div className="mx-auto w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 overflow-hidden">
           <img 
             src="/mealogo.png.jpg" 
@@ -77,9 +77,9 @@ export default function Login() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex items-center justify-center px-6 py-8">
+      <div className="flex-1 flex items-center justify-center px-6 py-6">
         <div className="w-full max-w-sm">
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="bg-white rounded-lg shadow-sm p-5">
             <h2 className="text-xl font-semibold text-gray-900 mb-6 text-center">
               Sign in to continue
             </h2>

@@ -331,7 +331,7 @@ const MessagingSystem = ({
             // WhatsApp Mobile Chat List View
             <div className={`h-full ${isDarkTheme ? 'bg-gray-900' : 'bg-white'} flex flex-col`}>
               {/* Header - WhatsApp Style */}
-              <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'} px-3 py-2 flex items-center justify-between`}>
+              <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'} px-2 py-1.5 flex items-center justify-between`}>
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center">
                     <img 
@@ -353,16 +353,16 @@ const MessagingSystem = ({
                   </div>
                   <h1 className={`${isDarkTheme ? 'text-white' : 'text-gray-900'} text-lg font-medium`}>Chats</h1>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
                   <button 
                     onClick={() => setShowSearch(!showSearch)}
-                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
+                    className={`p-1.5 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
                   >
                     {showSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
                   </button>
                   <button 
                     onClick={toggleTheme}
-                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
+                    className={`p-1.5 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
                   >
                     {isDarkTheme ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                   </button>
@@ -370,7 +370,7 @@ const MessagingSystem = ({
                     onClick={() => {
                       toast.info("More options coming soon!");
                     }}
-                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
+                    className={`p-1.5 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -381,7 +381,7 @@ const MessagingSystem = ({
 
               {/* Search Bar */}
               {showSearch && (
-                <div className={`px-3 py-1 ${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'}`}>
+                <div className={`px-2 py-1 ${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'}`}>
                   <Input
                     placeholder="Search or start new chat"
                     value={searchTerm}

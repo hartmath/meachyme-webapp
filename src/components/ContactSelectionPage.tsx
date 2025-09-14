@@ -177,7 +177,7 @@ export default function ContactSelectionPage({ onContactSelect, onBack }: Contac
   return (
     <div className="h-full flex flex-col bg-white dark:bg-gray-900">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <div className="flex items-center justify-between p-3 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
         <div className="flex items-center space-x-3">
           <Button
             variant="ghost"
@@ -209,7 +209,7 @@ export default function ContactSelectionPage({ onContactSelect, onBack }: Contac
       </div>
 
       {/* Search and Filters */}
-      <div className="p-4 space-y-4 bg-gray-50 dark:bg-gray-800">
+      <div className="p-3 space-y-3 bg-gray-50 dark:bg-gray-800">
         {/* Search Bar */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -261,7 +261,7 @@ export default function ContactSelectionPage({ onContactSelect, onBack }: Contac
             </p>
           </div>
         ) : (
-          <div className="space-y-1 p-2">
+          <div className="space-y-0.5 p-1">
             {filteredContacts.map((contact) => (
               <Card
                 key={contact.id}
@@ -272,7 +272,7 @@ export default function ContactSelectionPage({ onContactSelect, onBack }: Contac
                 }`}
                 onClick={() => toggleContactSelection(contact.id)}
               >
-                <CardContent className="p-4">
+                <CardContent className="p-3">
                   <div className="flex items-center space-x-3">
                     {/* Avatar */}
                     <div className="relative">
