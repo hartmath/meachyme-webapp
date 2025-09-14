@@ -365,7 +365,13 @@ const MessagingSystem = ({
                   >
                     {isDarkTheme ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
                   </button>
-                  <button className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} hover:${isDarkTheme ? 'bg-gray-800' : 'bg-gray-100'} rounded-full transition-colors`}>
+                  <button 
+                    onClick={() => {
+                      // Show a dropdown menu with options
+                      toast.info("More options coming soon! This will include settings, archived chats, and more.");
+                    }}
+                    className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} hover:${isDarkTheme ? 'bg-gray-800' : 'bg-gray-100'} rounded-full transition-colors`}
+                  >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                     </svg>

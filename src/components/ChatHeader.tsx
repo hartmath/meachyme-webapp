@@ -129,7 +129,13 @@ const ChatHeader = ({
             >
               <Phone className={`h-6 w-6 ${textSecondary}`} />
             </button>
-            <button className={`p-2 hover:${bgTertiary} rounded-full transition-colors`}>
+            <button 
+              onClick={() => {
+                // Show chat options menu
+                toast.info("Chat options coming soon! This will include mute notifications, clear chat, and more.");
+              }}
+              className={`p-2 hover:${bgTertiary} rounded-full transition-colors`}
+            >
               <MoreVertical className={`h-6 w-6 ${textSecondary}`} />
             </button>
           </div>
