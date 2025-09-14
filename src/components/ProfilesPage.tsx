@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Settings, Edit, Camera, MapPin, Mail, Phone, ChevronRight, Bell, Shield, HelpCircle, Info, LogOut, QrCode, Star, Archive, Bookmark, Download } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import ProfileEditModal from './ProfileEditModal';
 import NotificationSettingsModal from './NotificationSettingsModal';
 import HelpCenterModal from './HelpCenterModal';
@@ -10,10 +12,13 @@ interface ProfilesPageProps {
 }
 
 const ProfilesPage = ({ isDarkTheme = true }: ProfilesPageProps) => {
+  const { authUser } = useAuth();
   const [showQRCode, setShowQRCode] = useState(false);
   const [showProfileEdit, setShowProfileEdit] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const [showHelpCenter, setShowHelpCenter] = useState(false);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   
   const bgPrimary = isDarkTheme ? "bg-gray-900" : "bg-gray-50";
   const bgSecondary = isDarkTheme ? "bg-gray-800" : "bg-white";
@@ -72,31 +77,112 @@ const ProfilesPage = ({ isDarkTheme = true }: ProfilesPageProps) => {
     }
   };
 
-  const handleProfileSave = (profileData: any) => {
-    // In a real app, this would save to the database
-    console.log('Profile saved:', profileData);
-    toast.success('Profile updated successfully!');
+  useEffect(() => {
+    fetchUserProfile();
+  }, [authUser?.id]);
+
+  const fetchUserProfile = async () => {
+    if (!authUser?.id) return;
+    
+    try {
+      setLoading(true);
+      
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', authUser.id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching user profile:', error);
+        // Create a default profile if none exists
+        const defaultProfile = {
+          name: authUser.email?.split('@')[0] || "User",
+          email: authUser.email || "",
+          phone: "",
+          location: "",
+          position: "",
+          businessType: "attendee",
+          businessName: "",
+          bio: "",
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${authUser.id}`,
+          coverImage: "https://picsum.photos/400/200?random=profile",
+          stats: {
+            events: 0,
+            followers: 0,
+            following: 0
+          },
+          specialties: [],
+          rating: 0,
+          reviews: 0
+        };
+        setUserProfile(defaultProfile);
+        return;
+      }
+
+      // Transform database profile to UI format
+      const transformedProfile = {
+        name: profile.full_name || profile.username || authUser.email?.split('@')[0] || "User",
+        email: profile.email || authUser.email || "",
+        phone: profile.phone || "",
+        location: profile.location || "",
+        position: profile.position || "",
+        businessType: profile.user_type || "attendee",
+        businessName: profile.business_name || "",
+        bio: profile.bio || "",
+        avatar: profile.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${authUser.id}`,
+        coverImage: "https://picsum.photos/400/200?random=profile",
+        stats: {
+          events: profile.events_count || 0,
+          followers: profile.followers_count || 0,
+          following: profile.following_count || 0
+        },
+        specialties: profile.specialties || [],
+        rating: profile.average_rating || 0,
+        reviews: profile.reviews_count || 0
+      };
+
+      setUserProfile(transformedProfile);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      toast.error('Failed to load profile');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const userProfile = {
-    name: "Sarah Johnson",
-    email: "sarah.johnson@example.com",
-    phone: "+1 (555) 123-4567",
-    location: "Los Angeles, CA",
-    position: "Event Coordinator",
-    businessType: "Organizer",
-    businessName: "Premier Events LA",
-    bio: "Passionate event coordinator with 8+ years of experience creating unforgettable experiences. Specializing in corporate events, weddings, and music festivals. Let's make your next event extraordinary!",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
-    coverImage: "https://picsum.photos/400/200?random=profile",
-    stats: {
-      events: 127,
-      followers: 2840,
-      following: 890
-    },
-    specialties: ["Corporate Events", "Weddings", "Music Festivals", "Conferences"],
-    rating: 4.9,
-    reviews: 156
+  const handleProfileSave = async (profileData: any) => {
+    if (!authUser?.id) return;
+    
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: authUser.id,
+          full_name: profileData.name,
+          email: profileData.email,
+          phone: profileData.phone,
+          location: profileData.location,
+          position: profileData.position,
+          user_type: profileData.businessType,
+          business_name: profileData.businessName,
+          bio: profileData.bio,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) throw error;
+
+      // Update local state
+      setUserProfile(prev => ({
+        ...prev,
+        ...profileData
+      }));
+
+      toast.success('Profile updated successfully!');
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      toast.error('Failed to update profile');
+    }
   };
 
   const settingsSections = [
@@ -134,6 +220,27 @@ const ProfilesPage = ({ isDarkTheme = true }: ProfilesPageProps) => {
       ]
     }
   ];
+
+  if (loading) {
+    return (
+      <div className={`h-full ${bgPrimary} overflow-y-auto pb-20`}>
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
+          <span className={`ml-3 ${textSecondary}`}>Loading profile...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!userProfile) {
+    return (
+      <div className={`h-full ${bgPrimary} overflow-y-auto pb-20`}>
+        <div className="text-center py-8">
+          <p className={`${textSecondary}`}>Failed to load profile.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`h-full ${bgPrimary} overflow-y-auto pb-20`}>
