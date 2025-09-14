@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import ChatHeader from "@/components/ChatHeader";
 import MessageList from "@/components/MessageList";
 import MessageComposer from "@/components/MessageComposer";
-import { ArrowLeft, Search, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
 interface ChatPageProps {
@@ -168,48 +166,6 @@ const ChatPage: React.FC<ChatPageProps> = ({ className = "" }) => {
 
   return (
     <div className={`h-screen flex flex-col ${isDarkTheme ? 'bg-gray-900' : 'bg-white'} ${className}`}>
-      {/* Header */}
-      <div className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'} px-3 py-2 flex items-center justify-between border-b ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'}`}>
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={handleBack}
-            className={`p-2 ${isDarkTheme ? 'text-white' : 'text-gray-900'} hover:${isDarkTheme ? 'bg-gray-700' : 'bg-gray-100'} rounded-full transition-colors`}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-          <h1 className={`${isDarkTheme ? 'text-white' : 'text-gray-900'} text-lg font-medium`}>
-            Chat with {selectedContact.full_name || selectedContact.email}
-          </h1>
-        </div>
-        <div className="flex items-center gap-2">
-          <button 
-            onClick={() => setShowMessageSearch(!showMessageSearch)}
-            className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
-          >
-            {showMessageSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-          </button>
-          <button 
-            onClick={toggleTheme}
-            className={`p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} hover:${isDarkTheme ? 'text-white' : 'text-gray-900'} rounded-full transition-colors`}
-          >
-            {isDarkTheme ? '🌞' : '🌙'}
-          </button>
-        </div>
-      </div>
-
-      {/* Search Bar */}
-      {showMessageSearch && (
-        <div className={`px-3 py-1 ${isDarkTheme ? 'bg-gray-800' : 'bg-gray-50'}`}>
-          <Input
-            placeholder="Search messages..."
-            value={messageSearchTerm}
-            onChange={(e) => setMessageSearchTerm(e.target.value)}
-            className={`${isDarkTheme ? 'bg-gray-700' : 'bg-white'} border-0 ${isDarkTheme ? 'text-white' : 'text-gray-900'} placeholder-${isDarkTheme ? 'text-gray-400' : 'text-gray-500'} rounded-lg`}
-            autoFocus
-          />
-        </div>
-      )}
-
       {/* Chat Header */}
       <ChatHeader 
         recipient={selectedContact} 
