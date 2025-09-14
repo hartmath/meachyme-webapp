@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import Login from '@/pages/Login';
 import Index from '@/pages/Index';
 import Messages from '@/pages/Messages';
+import Chat from '@/pages/Chat';
 import { Toaster } from 'sonner';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -35,6 +36,14 @@ function App() {
             }
           />
           <Route path="/messages" element={<Messages />} />
+          <Route
+            path="/chat/:contactId"
+            element={
+              <PrivateRoute>
+                <Chat />
+              </PrivateRoute>
+            }
+          />
       </Routes>
         <Toaster />
       </AuthProvider>

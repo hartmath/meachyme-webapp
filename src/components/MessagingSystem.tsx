@@ -12,6 +12,7 @@ import ContactSelectionPage from "./ContactSelectionPage";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Search, X, Sun, Moon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -28,6 +29,8 @@ const MessagingSystem = ({
   headerTitle = "Messages",
   onContactSelect
 }: MessagingSystemProps) => {
+  const { user: authUser } = useAuth();
+  const navigate = useNavigate();
   const [contacts, setContacts] = useState<User[]>([]);
   const [selectedContact, setSelectedContact] = useState<User | null>(null);
   const [showChat, setShowChat] = useState(false);
@@ -42,7 +45,6 @@ const MessagingSystem = ({
   const [messageSearchTerm, setMessageSearchTerm] = useState("");
   const [showMessageSearch, setShowMessageSearch] = useState(false);
   const [showContactSelection, setShowContactSelection] = useState(false);
-  const { authUser } = useAuth();
 
   useEffect(() => {
     if (authUser?.id) {
@@ -242,8 +244,8 @@ const MessagingSystem = ({
   };
 
   const handleSelectContact = (contact: User) => {
-    setSelectedContact(contact);
-    setShowChat(true);
+    // Navigate to the dedicated Chat page
+    navigate(`/chat/${contact.id}`);
     // Clear unread count when selecting a contact
     setUnreadCounts(prev => ({
       ...prev,

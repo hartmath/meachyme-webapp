@@ -101,7 +101,8 @@ export default function ContactSelectionPage({ onContactSelect, onBack }: Contac
   };
 
   const handleContactSelect = (contact: Contact) => {
-    onContactSelect(contact);
+    // Navigate directly to the Chat page
+    navigate(`/chat/${contact.id}`);
   };
 
   const handleStartGroupChat = () => {
@@ -116,7 +117,7 @@ export default function ContactSelectionPage({ onContactSelect, onBack }: Contac
     
     // For now, just start a chat with the first selected contact
     // In a full implementation, you'd create a group chat
-    onContactSelect(selectedContactsList[0]);
+    navigate(`/chat/${selectedContactsList[0].id}`);
     toast.success(`Starting chat with ${selectedContactsList.length} contact(s)`);
   };
 
