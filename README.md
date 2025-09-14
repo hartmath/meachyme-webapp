@@ -1,8 +1,10 @@
-# Welcome to your Lovable project
+# Chyme - Event Industry Messaging App
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/583aaa4b-c7b4-4cf3-bcfb-c7db9446eb5e
+**Chyme** is a comprehensive messaging platform designed specifically for the event industry. It combines WhatsApp-style messaging with event management features, social feeds, and professional networking capabilities.
+
+**GitHub Repository**: https://github.com/hartmath/meachyme-webapp.git
 
 ## How can I edit this code?
 
@@ -50,24 +52,82 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## 🚀 Key Features
 
-This project is built with:
+- **💬 WhatsApp-style Messaging**: Real-time messaging with voice messages, reactions, and file sharing
+- **📅 Event Management**: Create, manage, and attend events with ticket purchasing
+- **📱 Social Feeds**: Twitter-like event updates and industry news
+- **👥 Professional Profiles**: Event industry-specific user profiles (vendors, organizers, attendees)
+- **🔔 Smart Notifications**: Customizable notification preferences
+- **📞 Video/Voice Calls**: Integrated calling functionality
+- **🎨 Modern UI**: Mobile-first responsive design with dark/light themes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🛠️ Technologies Used
 
-## How can I deploy this project?
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI Framework**: Tailwind CSS + Shadcn/ui components
+- **Backend**: Supabase (Authentication, Database, Real-time)
+- **State Management**: React Context + Hooks
+- **Routing**: React Router DOM
+- **Forms**: React Hook Form + Zod validation
+- **Icons**: Lucide React
+- **Notifications**: Sonner
+- **Deployment**: Vercel ready
 
-Simply open [Lovable](https://lovable.dev/projects/583aaa4b-c7b4-4cf3-bcfb-c7db9446eb5e) and click on Share -> Publish.
+## 🚀 Quick Start
 
-## Can I connect a custom domain to my Lovable project?
+### Prerequisites
+- Node.js 18+ and npm
+- Supabase account
 
-Yes, you can!
+### Setup Instructions
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/hartmath/meachyme-webapp.git
+   cd meachyme-webapp
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Set up Supabase**:
+   - Create a new Supabase project
+   - Run the SQL script from `supabase_setup.sql` in your Supabase SQL Editor
+   - Update the Supabase URL and API key in `src/integrations/supabase/client.ts`
+
+4. **Start development server**:
+   ```bash
+   npm run dev
+   ```
+
+## 🚀 Deployment Options
+
+### Vercel (Recommended)
+1. Connect your GitHub repository to Vercel
+2. Deploy automatically with the included `vercel.json` configuration
+
+### Netlify
+1. Connect your GitHub repository to Netlify
+2. Set build command: `npm run build`
+3. Set publish directory: `dist`
+
+### Manual Deployment
+```bash
+npm run build
+# Upload the 'dist' folder to your hosting provider
+```
+
+## 🔧 Environment Variables
+
+Copy `env.example` to `.env.local` and update with your values:
+- `VITE_SUPABASE_URL`: Your Supabase project URL
+- `VITE_SUPABASE_ANON_KEY`: Your Supabase anon key
+
+## 📱 Mobile App
+
+This web app is designed mobile-first and can be installed as a PWA (Progressive Web App) on mobile devices.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)

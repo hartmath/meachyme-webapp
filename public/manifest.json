@@ -1,0 +1,27 @@
+{
+  "name": "Chyme - Event Industry Messaging",
+  "short_name": "Chyme",
+  "description": "The messaging space for event people - connect, collaborate, and create amazing events",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/mealogo.png.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/mealogo.png.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "business", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+}
