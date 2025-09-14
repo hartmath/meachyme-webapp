@@ -439,11 +439,14 @@ const MessagingSystem = ({
   return (
     <div className={`h-full ${bgPrimary} ${className} relative`}>
       {renderActiveTab()}
-      <BottomNavigation 
-        activeTab={activeTab} 
-        onTabChange={handleTabChange} 
-        isDarkTheme={isDarkTheme} 
-      />
+      {/* Only show bottom navigation when not in chat view */}
+      {!showChat && (
+        <BottomNavigation 
+          activeTab={activeTab} 
+          onTabChange={handleTabChange} 
+          isDarkTheme={isDarkTheme} 
+        />
+      )}
       {/* Floating Action Button for New Chat - only show on chat tab when not in chat view */}
       {activeTab === "chat" && !showChat && (
         <ConversationButton 
